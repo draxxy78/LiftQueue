@@ -1,13 +1,15 @@
-import static com.sun.tools.sjavac.Main.go;
-
 public class Main
 {
     //Assumption : number of inputs given 
     public static void main(String[] args)
     {
-        RequestQueue requestQueue = Lift.liftInput(5);
-        //Task : iterate through the request queue an move the lift
-        requestQueue.peek();
+        RequestQueue rq = new RequestQueue(5);
+        for(int i =0 ; i < RequestQueue.capacity ; i++)
+        {
+            RequestQueue.queueEnqueue(i);
+        }
+        RequestQueue.queueDisplay();
+        RequestQueue.peek();
     }
 
 }
