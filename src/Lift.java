@@ -1,49 +1,15 @@
-import java.util.Scanner;
-
-public class Lift
+public class  Lift
 {
-    int loadCapacity;
-    int currentLoad ;
-    int inputCount;
-    public Lift(int inputCount)
+
+    int currentLevel = 0 ;
+    int loadCapacity = 850;
+
+
+    // 1.Priority 1.Requested time 2.Range 3.Current Load
+    private void moveTo()
     {
-        this.inputCount = inputCount;
-        this.loadCapacity = 850 ;
-        this.currentLoad = 750;
-    }
-
-
-    public static RequestQueue liftInput(int inputCount)
-    {
-        RequestQueue rq = new RequestQueue(inputCount);
-        for ( int i =0 ; i < inputCount ; i ++ )
-        {
-
-            Scanner s = new Scanner(System.in);
-            RequestQueue.queueEnqueue(s.nextInt());
-
-        }
-        return rq;
 
     }
 
-    //    go()
-//    {
-//        if(currentLoad > loadCapacity)
-//        {
-//            if (currentFloor != requestFloor)
-//            {
-//                if( currentFloor < requestFloor)
-//                {
-//                    moveUp();
-//                }
-//                else
-//                {
-//                    moveDown();
-//                }
-//            }
-//        }
-//
-//    }
 
 }

@@ -2,18 +2,20 @@ public class RequestQueue
 {
     private static int front;
     private static int rear;
-    static int capacity;
-    private static int queue[];
+    static Request capacity;
+    private static Object queue[];
 
-    RequestQueue(int size)
+    //Create an object in java
+
+    RequestQueue(Request size)
     {
         front = rear = 0;
         capacity = size;
-        queue = new int[capacity];
+        queue = new Object[capacity];
     }
 
     // insert an element into the queue
-    static void queueEnqueue(int item)
+    static void queueEnqueue(Object item)
     {
         // check if the queue is full
         if (capacity == rear)
@@ -23,7 +25,8 @@ public class RequestQueue
         }
 
         // insert element at the rear
-        else {
+        else
+        {
             queue[rear] = item;
             rear++;
         }
@@ -31,7 +34,8 @@ public class RequestQueue
     }
 
     //remove an element from the queue
-    static void queueDequeue()  {
+    static void queueDequeue()
+    {
         // check if queue is empty
         if (front == rear) {
             System.out.printf("\nQueue is empty\n");
@@ -80,7 +84,7 @@ public class RequestQueue
         if (front == rear)
         {
             System.out.println("Queue is Empty\n");
-            return;
+            return ;
         }
         System.out.printf("\nFront Element of the queue: %d", queue[front]);
         return;
@@ -91,6 +95,55 @@ public class RequestQueue
         System.out.println("The first element in the queue is :" + queue[capacity-1]);
     }
 
+    static int remove()
+    {
+        int key = 0;
+
+        // check if queue is empty
+        if (front == rear) {
+            System.out.printf("\nQueue is empty\n");
+            return key;
+        }
+
+        // shift elements to the right by one place uptil rear
+        else
+        {
+            key = (int) queue[0];
+            for (int i = 0; i < rear - 1; i++)
+            {
+
+                queue[i] = queue[i + 1];
+            }
+
+            // set queue[rear] to 0
+            if (rear < capacity)
+                queue[rear] = 0;
+
+            // decrement rear
+            rear--;
+        }
+        return key;
+    }
+
+    static int[] giveQueue()
+    {
+        int i;
+        int [] queueRequest = new int[capacity];
+        if (front == rear) {
+            System.out.println("Queue is Empty\n");
+            return queueRequest;
+        }
+
+
+        // traverse front to rear and print elements
+        for (i = front; i < rear; i++)
+        {
+            queueRequest[i] = queue[i];
+        }
+
+        return queueRequest;
+
+    }
 
 
 }

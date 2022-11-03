@@ -3,13 +3,11 @@ public class Main
     //Assumption : number of inputs given 
     public static void main(String[] args)
     {
-        RequestQueue rq = new RequestQueue(5);
-        for(int i =0 ; i < RequestQueue.capacity ; i++)
-        {
-            RequestQueue.queueEnqueue(i);
-        }
-        RequestQueue.queueDisplay();
-        RequestQueue.peek();
+        Request r = new Request(5, (int) System.nanoTime(),0);
+        Request r1 = new Request(7, (int) System.nanoTime(),0);
+        Request r2 = new Request(3, (int) System.nanoTime(),0);
+
+        RequestQueue rq = new RequestQueue(3);
     }
 
 }
