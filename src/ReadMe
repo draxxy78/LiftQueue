@@ -1,0 +1,24 @@
+//Class Request
+
+Request(currentLevel,destinationLevel,timeStamp)
+
+//Queue of objects of type Requests().
+
+RequestQueue(): [{currentLevel,destinationLevel,timeStamp},{currentLevel,destinationLevel,timeStamp}]
+
+Eg : [{0,2,150301},{0,5,150302},{0,-1,150303},{0,8,150304}]
+
+
+//Class lift
+
+Lift(loadCapacity, currentLoad , currentLevel , RequestQueue())
+
+//methods inside lift :
+
+moveto(decideLevel())
+
+decideLevel( range , currentLoad , timeStamp, )
+
+
+
+
