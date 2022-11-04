@@ -2,12 +2,12 @@ public class RequestQueue
 {
     private static int front;
     private static int rear;
-    static Request capacity;
+    static int capacity;
     private static Object queue[];
 
     //Create an object in java
 
-    RequestQueue(Request size)
+    RequestQueue(int size)
     {
         front = rear = 0;
         capacity = size;
@@ -90,9 +90,10 @@ public class RequestQueue
         return;
     }
 
-    static  void peek()
+    static Request peek()
     {
-        System.out.println("The first element in the queue is :" + queue[capacity-1]);
+        System.out.println("The first element in the queue is :" + queue[0]);
+        return (Request) queue[0];
     }
 
     static int remove()
@@ -125,10 +126,10 @@ public class RequestQueue
         return key;
     }
 
-    static int[] giveQueue()
+    static Request[] giveQueue()
     {
         int i;
-        int [] queueRequest = new int[capacity];
+        Request[] queueRequest = new Request[capacity];
         if (front == rear) {
             System.out.println("Queue is Empty\n");
             return queueRequest;
@@ -138,7 +139,7 @@ public class RequestQueue
         // traverse front to rear and print elements
         for (i = front; i < rear; i++)
         {
-            queueRequest[i] = queue[i];
+            queueRequest[i] = (Request) queue[i];
         }
 
         return queueRequest;
