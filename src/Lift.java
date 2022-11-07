@@ -1,104 +1,76 @@
-import java.util.Scanner;
-
 public class  Lift
 {
 
-    int weightCapacity = 120;
-    int liftPos = 0 ;
+    int currentLevel = 0 ;
 
-
-    public void selectDirection(int userPos)
+    // 1.Priority 1.Requested time 2.Range 3.Current Load
+    void moveTo(Request[] r)//receives the list of destinationLevel and assigns  them priorities based on the difference in currentLevel and destination level
     {
-        Scanner sc= new Scanner(System.in);
-        System.out.print("Enter 0 for DOWN , 1 for UP : ");
-        int upOrDown= sc.nextInt();
-        boolean weightFlag;
-        if(userPos != liftPos)
-        {
+        PriorityQueue queuePriority = assignPriority(r);//creates  a priority queue
+        int i =0 ;
 
-            liftPos = moveLiftToUserPos(liftPos,userPos);
-            Scanner sc1= new Scanner(System.in);
-            System.out.println("Enter the total user weight:");
-            int totalUserWeight = sc1.nextInt();
-            weightFlag = userWeightCheck(totalUserWeight);
-        }
-        else
+        while (!queuePriority.isEmpty())
         {
-            weightFlag = userWeightCheck(118);
+            Level p = queuePriority.remove();
+            System.out.println("Level :"+p.level+" Range: "+p.range+" Current Lvl:"+p.currentLevel);
+            moveTo2(p.level,p.currentLevel);
         }
 
-        if (!weightFlag)
-        {
-            Scanner sc1= new Scanner(System.in);
-            System.out.println("Enter the floor you want to go to :");
-            int floorInput= sc1.nextInt();
-            liftPos = moveLiftToUserInput(floorInput,liftPos);
-        }
-        else
-        {
-            System.out.println("Overweight !!");
-        }
 
     }
 
-
-
-    public boolean userWeightCheck(int totalUserWeight)
+    void moveTo2(int destinationLevel , int currentLevel)
     {
-        boolean weightFlag;
-        if( totalUserWeight > weightCapacity)
-        {
-            weightFlag =  true;
-        }
-        else
-        {
-            weightFlag = false;
-        }
-
-        return weightFlag;
-    }
-
-    public int moveLiftToUserInput(int floorInput , int liftPos)
-    {
-        if(this.liftPos > floorInput)
-        {
-            do
+        
+            if(currentLevel < destinationLevel)
             {
-                System.out.println("You are at floor"+ this.liftPos) ;
-                this.liftPos -= 1;
-            }while (this.liftPos != floorInput);
-        }
-        else
-        {
-            do
+                do
+                {
+                    currentLevel += 1;
+                    System.out.println(currentLevel);
+
+                }while (currentLevel != destinationLevel);
+            }
+            else
             {
-                System.out.println("You are at floor"+ this.liftPos) ;
-                this.liftPos += 1;
-            }while (this.liftPos != floorInput);
-        }
-        return this.liftPos;
+                System.out.println(currentLevel);
+                do
+                {
+                    currentLevel += 1;
+                }while (currentLevel != destinationLevel);
+            }
+        
     }
 
-    public int moveLiftToUserPos(int liftPos, int userPos)
+
+
+
+    PriorityQueue assignPriority(Request[] r)
     {
-        if(this.liftPos > userPos)
+        PriorityQueue pq = new PriorityQueue(r.length);
+        int[] rangeList = calcRange(r);
+        for ( int i = 0 ; i < rangeList.length ; i++)
         {
-            do{
-
-                System.out.println("Lift is at "+ this.liftPos) ;
-                this.liftPos--;
-            }while(this.liftPos != userPos);
+            pq.insert(r[i].destinationLevel,rangeList[i],r[i].currentLevel);
         }
-        else
-        {
-            do
-            {
-                System.out.println("Lift is at "+ this.liftPos) ;
-                this.liftPos++;
-            }while(this.liftPos != userPos);
-        }
-
-        return this.liftPos;
+        return pq;
     }
+
+    int[] calcRange(Request[] r)
+    {
+        int[] rangeList = new int[r.length];
+        for ( int i = 0 ; i < r.length ; i++)
+        {
+            rangeList[i] = r[i].destinationLevel - r[i].currentLevel;
+        }
+        return rangeList;
+    }
+
+
+
+
+    //Once the requestQueue object is passed into decideLevel ,
+    // we need to calculate range and assign a priority to each level in the queue
+    //floors will be traversed based on the priority
 
 }
