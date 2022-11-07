@@ -10,14 +10,17 @@ public class Main
     public static void main(String[] args)
     {
 
-        Request r1 = new Request(5, (int) System.nanoTime(),0);
-        Request r2 = new Request(7, (int) System.nanoTime(),0);
-        Request r3 = new Request(3, (int) System.nanoTime(),0);
+        Request r1 = new Request(5, (int) System.nanoTime(),3);
+        Request r2 = new Request(8, (int) System.nanoTime(),3);
+        Request r3 = new Request(3, (int) System.nanoTime(),3);
+        Request r4 = new Request(2, (int) System.nanoTime(),3);
 
-        RequestQueue rq = new RequestQueue(3);
+
+        RequestQueue rq = new RequestQueue(4);
         RequestQueue.queueEnqueue(r1);
         RequestQueue.queueEnqueue(r2);
         RequestQueue.queueEnqueue(r3);
+        RequestQueue.queueEnqueue(r4);
 
 
         Lift l = new Lift();
