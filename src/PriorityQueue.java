@@ -8,15 +8,15 @@ class Level
     int level;
     int range;
 
-    int currentLevel;
+    int sourceLevel;
 
 
     /** Constructor **/
-    public Level(int level, int range, int currentLevel)
+    public Level(int level, int range, int sourceLevel)
     {
         this.level = level;
         this.range = range;
-        this.currentLevel = currentLevel;
+        this.sourceLevel = sourceLevel;
     }
 
     public String toString()
@@ -48,7 +48,7 @@ class PriorityQueue
         return heapSize == 0;
     }
 
-   public boolean isFull()
+    public boolean isFull()
     {
         return heapSize == capacity - 1;
     }
@@ -58,9 +58,9 @@ class PriorityQueue
         return heapSize;
     }
     /** function to insert task **/
-    public void insert(int level, int range, int currentLevel)
+    public void insert(int level, int range, int sourceLevel)
     {
-        Level newJob = new Level(level, range, currentLevel);
+        Level newJob = new Level(level, range, sourceLevel);
 
         heap[++heapSize] = newJob;
         int pos = heapSize;
@@ -101,6 +101,11 @@ class PriorityQueue
         heap[parent] = temp;
 
         return item;
+    }
+
+    public Level getIth(int index)
+    {
+        return heap[index];
     }
 
 

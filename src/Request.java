@@ -1,14 +1,16 @@
 public class Request
 {
-    int currentLevel;
-    int destinationLevel;
-    int timeStamp;
+     int sourceLevel;
 
-    public Request(int destinationLevel, int timeStamp, int currentLevel)
+    int destinationLevel;
+
+    int requestedAt;
+
+    public Request(int destinationLevel, int requestedAt, int sourceLevel)
     {
         this.destinationLevel = destinationLevel;
-        this.timeStamp = (int) timeStamp;
-        this.currentLevel = currentLevel;
+        this.requestedAt =  requestedAt;
+        this.sourceLevel = sourceLevel;
     }
 
 
