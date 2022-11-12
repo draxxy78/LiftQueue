@@ -1,25 +1,32 @@
 import java.util.Scanner;
 
-public class Lift {
+public class Lift
+{
 
-    private int sourceLevel;
+    public static int sourceLevel;
 
-//    public static void getRequest(int sourceLevel) {
-//        int i = 0;
-//        RequestQueue rq = new RequestQueue(4);
-//        Scanner sc = new Scanner(System.in);
-//        Request[] requestList = new Request[4];
-//        while (i != 4) {
-//            System.out.print("Enter Destination Level : ");
-//            int destinationLevel = sc.nextInt();
-//            Request r = new Request(destinationLevel, (int) System.nanoTime(), sourceLevel);
-//            RequestQueue.queueEnqueue(r);
-//            requestList = RequestQueue.giveQueue();
-//            i += 1;
-//        }
-//        moveTo(requestList);
-//
-//    }
+    public Lift()
+    {
+        sourceLevel = 3;
+    }
+
+    public static void getRequest()
+    {
+        int i = 0;
+        RequestQueue rq = new RequestQueue(5);
+        Scanner sc = new Scanner(System.in);
+        Request[] requestList = new Request[5];
+        while (i != 5) {
+            System.out.print("Enter Destination Level : ");
+            int destinationLevel = sc.nextInt();
+            Request r = new Request(destinationLevel, (int) System.nanoTime(), sourceLevel);
+            RequestQueue.queueEnqueue(r);
+            requestList = RequestQueue.giveQueue();
+            i += 1;
+        }
+        moveTo(requestList);
+
+    }
 
     // 1.Priority 1.Requested time 2.Range 3.Current Load
     static void moveTo(Request[] r)//receives the list of destinationLevel and assigns  them priorities based on the difference in sourceLevel and destination level
@@ -27,18 +34,18 @@ public class Lift {
         PriorityQueue queuePriority = assignPriority(r);//creates  a priority queue
         int i = 0;
 
-        while (!queuePriority.isEmpty()) {
+        while (!queuePriority.isEmpty())
+        {
             Level p = queuePriority.remove();
-            System.out.println("Level :" + p.level + " Range: " + p.range + " Current Lvl:" + p.sourceLevel);
-            int sourceLevel = moveTo2(p.level, p.sourceLevel);
-            queuePriority.getIth(i + 1).sourceLevel = sourceLevel;
-
+            p.sourceLevel = moveTo2(p.level, p.sourceLevel);
+            System.out.println("Going To :" + p.level + " Range: " + p.range + " Current Lvl:" + p.sourceLevel);
         }
     }
 
     static int moveTo2(int destinationLevel, int sourceLevel) {
 
-        if (sourceLevel < destinationLevel) {
+        if (sourceLevel < destinationLevel)
+        {
             do {
                 sourceLevel += 1;
                 System.out.println("You are at : " + sourceLevel);
@@ -64,14 +71,14 @@ public class Lift {
         return pq;
     }
 
-    static int[] calcRange(Request[] r) {
+    static int[] calcRange(Request[] r)
+    {
         int[] rangeList = new int[r.length];
         for (int i = 0; i < r.length; i++) {
             rangeList[i] = r[i].destinationLevel - r[i].sourceLevel;
         }
         return rangeList;
     }
-
 
     //Once the requestQueue object is passed into decideLevel ,
     // we need to calculate range and assign a priority to each level in the queue

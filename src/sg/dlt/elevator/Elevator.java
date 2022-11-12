@@ -6,22 +6,23 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Elevator {
-    public static void main(String[] args) {
+public static void main(String[] args)
+{
 
-    }
+}
 
-    public void goTo(int level) {
-        System.out.println("Goto level " + level);
-    }
+public static void goTo(int level) {
+    System.out.println("Goto level " + level);
+}
 
-    // Queue
+// Queue
 
-    public void submitRequests(int level) {
+public static void submitRequests(int level) {
         System.out.println("Requested " + level);
         // put this request to queue
     }
 
-    private void processRequest() {
+    private static void processRequest() {
         // process queued requests
         // run algorithms
         goTo(5);
@@ -44,7 +45,7 @@ public class Elevator {
         scheduler.shutdown();
     }
 
-    class RunnableRequestGenerator implements Runnable {
+    public static class RunnableRequestGenerator implements Runnable {
 
         @Override
         public void run() {
@@ -53,11 +54,11 @@ public class Elevator {
 
     }
 
-    class RunnableElevatorRequestProcessor implements Runnable {
+    public static class RunnableElevatorRequestProcessor implements Runnable {
 
         private int identifier;
 
-        RunnableElevatorRequestProcessor(int identifier) {
+        public RunnableElevatorRequestProcessor(int identifier) {
             this.identifier = identifier;
         }
 
@@ -70,7 +71,7 @@ public class Elevator {
 
     }
 
-    private int getRandomLevel() {
+    private static int getRandomLevel() {
         Random random = new Random();
         return random.nextInt(5);
     }
