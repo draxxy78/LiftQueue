@@ -108,7 +108,6 @@ public class RequestQueue {
             for (int i = 0; i < rear - 1; i++) {
                 queue[i] = queue[i + 1];
             }
-
             // set queue[rear] to 0
             if (rear < capacity)
                 queue[rear] = 0;

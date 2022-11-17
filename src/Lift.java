@@ -46,6 +46,12 @@ public class Lift {
         }
     }
 
+    //externalRequests = [{direction, timeStamp, sourceLevel}]
+    //internalRequests = [{timeStamp, destinationLevel , sourceLevel}]
+
+
+    //linking externalRequest of one user to his internalRequest
+
     static int moveTo2(Level p) {
         if (sourceLevel < p.level) {
             while (sourceLevel != p.level) {

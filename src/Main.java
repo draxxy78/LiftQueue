@@ -15,4 +15,8 @@ public class Main {
         System.out.println(elapsedTime);
     }
 
+    // UP  : 4 , 5
+    //DOWN : 1 , 2
+    // The lift will start from sourcePosition  =  3, has to complete all the request in the down[] , before going to the UP{]
+
 }
