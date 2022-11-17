@@ -5,7 +5,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 
-public class RunLift extends Thread {
+public class RunLift {
     public static void main(String[] args) {
         liftProcessor();
     }
@@ -22,11 +22,16 @@ public class RunLift extends Thread {
 
 
     static class LiftMovement implements Runnable {
-
         @Override
         public void run() {
-            Request[] listRequest = Lift.getRequest();
-            Lift.moveTo(listRequest);
+            Lift lift = new Lift();
+            if (lift.checkload(Math.random() * (1050 + 1) + 0)) {
+                Request[] requests = Lift.getRequest();
+                Lift.moveTo(requests);
+            } else {
+                System.out.println("Overweight!");
+            }
+
         }
     }
 

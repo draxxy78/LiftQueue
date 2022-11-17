@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.Queue;
+
 
 public class RequestQueue {
     private static int front;
@@ -13,11 +16,14 @@ public class RequestQueue {
         queue = new Object[capacity];
     }
 
+
     // insert an element into the queue
-    static void queueEnqueue(Object item) {
+    static void queueEnqueue(Request item) {
         // check if the queue is full
+
         if (capacity == rear) {
             System.out.printf("\nQueue is full\n");
+
             return;
         }
 
@@ -66,6 +72,7 @@ public class RequestQueue {
         for (i = front; i < rear; i++) {
             System.out.print(queue[i] + ",");
         }
+
         System.out.println();
         return;
     }
@@ -99,7 +106,6 @@ public class RequestQueue {
         else {
             key = (int) queue[0];
             for (int i = 0; i < rear - 1; i++) {
-
                 queue[i] = queue[i + 1];
             }
 
@@ -113,11 +119,12 @@ public class RequestQueue {
         return key;
     }
 
+
     static Request[] giveQueue() {
         int i;
         Request[] queueRequest = new Request[capacity];
         if (front == rear) {
-            System.out.println("Queue is Empty\n");
+            System.out.println(" Queue is Empty\n");
             return queueRequest;
         }
 
@@ -128,6 +135,22 @@ public class RequestQueue {
         }
 
         return queueRequest;
+
+    }
+
+
+    static void dedupe(Request item) {
+        boolean flag = true;
+
+        for (int i = 0; i < RequestQueue.capacity; i++) {
+            if (queue[i] == item) {
+                flag = false;
+            }
+        }
+
+        if (flag) {
+            queueEnqueue(item);
+        }
 
     }
 

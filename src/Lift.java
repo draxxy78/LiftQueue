@@ -1,15 +1,13 @@
 import java.util.Random;
 import java.util.Scanner;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+
 
 public class Lift {
 
     public static int sourceLevel;
 
     public Lift() {
-        this.sourceLevel = 0;
+        sourceLevel = 3;
     }
 
     public static Request[] getRequest() {
@@ -29,40 +27,39 @@ public class Lift {
     }
 
     // 1.Priority 1.Requested time 2.Range 3.Current Load
-    static void moveTo(Request[] r)//receives the list of destinationLevel and assigns  them priorities based on the difference in sourceLevel and destination level
+    static <StopWatch> void moveTo(Request[] r)//receives the list of destinationLevel and assigns  them priorities based on the difference in sourceLevel and destination level
     {
-        PriorityQueue queuePriority = assignPriority(r);//creates  a priority queue
-        int i = 0;
 
-
-        while (!queuePriority.isEmpty()) {
-            Level p = queuePriority.remove();
-            System.out.println("Level :" + p.level + " Range: " + p.range + " Current Lvl:" + p.sourceLevel);
-            int sourceLevel = moveTo2(p.level, p.sourceLevel);
-            queuePriority.getIth(i + 1).sourceLevel = sourceLevel;
-
+        Random rand = new Random();
+        int load = rand.nextInt(1000);
+        if (load < 700) {
+            PriorityQueue queuePriority = assignPriority(r);//creates  a priority queue
+            int i = 0;
+            while (!queuePriority.isEmpty()) {
+                Level p = queuePriority.remove();
+                System.out.println("Level : " + p.level + " Range : " + p.range);
+                long start = System.nanoTime();
+                sourceLevel = moveTo2(p);
+                long end = System.nanoTime();
+                System.out.println("Time taken :" + (end - start) / 1000);
+            }
         }
-
     }
 
-    static int moveTo2(int destinationLevel, int sourceLevel) {
-        if (sourceLevel < destinationLevel) {
-            do {
+    static int moveTo2(Level p) {
+        if (sourceLevel < p.level) {
+            while (sourceLevel != p.level) {
                 sourceLevel += 1;
-                System.out.println("You are at : " + sourceLevel);
-            } while (sourceLevel != destinationLevel);
-        }
-        if (sourceLevel > destinationLevel) {
-            while (sourceLevel != destinationLevel) {
-
-                sourceLevel = sourceLevel - 1;
-                System.out.println("You are at : " + sourceLevel);
-
+                System.out.println("-You are at : " + sourceLevel);
+            }
+        } else {
+            while (sourceLevel != p.level) {
+                sourceLevel -= 1;
+                System.out.println("-You are at : " + sourceLevel);
             }
         }
         return sourceLevel;
     }
-
 
     static PriorityQueue assignPriority(Request[] r) {
         PriorityQueue pq = new PriorityQueue(r.length);
@@ -82,6 +79,18 @@ public class Lift {
         return rangeList;
     }
 
+    public Boolean checkload(double currentLoad) {
+
+        Boolean loadFlag = false;
+        int loadLimit = 1050;
+        if (currentLoad < loadLimit) {
+            loadFlag = true;
+        } else {
+            loadFlag = false;
+        }
+
+        return loadFlag;
+    }
 
     //Once the requestQueue object is passed into decideLevel ,
     // we need to calculate range and assign a priority to each level in the queue
