@@ -1,0 +1,141 @@
+externalRequests = [{direction, timeStamp, sourceLevel}]
+
+internalRequests = [{destinationLevel, timeStamp, sourceLevel}]
+
+
+Lift is in rest state at level 0 waiting for an external request.
+
+Scenario : Single request processing.
+
+[{up,155700,3}] //User presses UP button from 3rd floor
+	0
+	1
+	2
+	3	    //lift moves up and reaches the level from which the external request came.
+
+[{6, 155720, 3}]	//User enters lift and selects floor level 6
+
+	4		//lift moves up to level 4
+	5		//lift moves up to level 5
+	6		//lift moves up to level 6
+
+[{down,155740, 9}] //User presses DOWN button from 9th floor
+
+	7
+	8
+	9		//lift moves up and reaches level 9
+
+[{2, 155780 , 9}] //User enters lift , selects level 2 from 9th floor
+
+
+	8		//lift moves down to level 8
+	7		//lift moves down to level 7
+	6		//lift moves down to level 6
+	5		//lift moves down to level 5
+	4		//lift moves down to level 4
+	3		//lift moves down to level 3
+	2		//lift moves down to level 2
+
+Scenario : Lift receives multiple requests from a floor
+
+// users get in from level 0 , both UP and DOWN directions are selected.
+
+[{2, 155720, 0}]
+[{-1, 155721, 0}]
+[{8, 155722, 0}]
+[{5, 155723, 0}]
+[{1, 155724, 0}]
+
+//All requests are from sourceFloor = 0, sort the requests based on the difference from the sourceLevel
+
+[{-1, 155721, 0}]
+[{1, 155724, 0}]
+[{2, 155720, 0}]
+[{5, 155723, 0}]
+[{8, 155722, 0}]
+
+UP:
+
+[{1, 155724, 0}]
+[{2, 155720, 0}]
+[{5, 155723, 0}]
+[{8, 155722, 0}]
+
+
+DOWN:
+
+[{-1, 155721, 0}]
+
+//Taking into consideration range and timeStamp the lift should go to level -1 (range : 1, timeStamp difference with max(timeStamp) : 3
+
+Lift moves down to Level -1
+
+[{1, 155724, 0}]
+Lift moves up to Level 1
+
+[{2, 155720, 0}]
+Lift moves up to Level 2
+
+[{5, 155723, 0}]
+Lift moves up to Level 5
+
+[{8, 155722, 0}]
+Lift moves up to Level 8
+
+Scenario : Lift receives another request while previous request is in process.
+
+[{1, 155724, 0}]
+Lift moves up to Level 1
+
+
+[{2, 155720, 0}]
+Lift moves up to Level 2
+
+//When lift is at Level 2 , it receives an external request [DOWN , 155801 , 3] from an user at level 3 to go to level 0
+//In this case , since a number of requests are already in queue to go up this request is put on hold and lift does not stop here.
+Lift moves up to Level 3
+Lift moves up to Level 4
+
+[{5, 155723, 0}]
+Lift moves up to Level 5
+//When lift is at Level 5 ,an user at level 7 presses the button to go up, Since the lift is going up in the same direction as of user request , the lift should stop at level 7.
+//User enters at level 7 and presses button for level 9
+
+UP:
+[{8, 155722, 0}]
+[{9, 155930 , 7}]
+
+[{8, 155722, 0}]
+Lift moves up to Level 8
+
+[{9, 155930 , 7}]
+Lift moves up to Level 9
+
+Once all the UP requests are completed , the lift goes back to the external request at level 3 [DOWN , 155801 , 3]
+Lift moves down to Level 8
+Lift moves down to Level 7
+Lift moves down to Level 6
+Lift moves down to Level 5
+Lift moves down to Level 4
+Lift moves down to Level 3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
