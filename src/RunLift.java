@@ -17,7 +17,6 @@ public class RunLift {
             scheduler.schedule(new LiftMovement(), 5, TimeUnit.SECONDS);
         }
         scheduler.shutdown();
-
     }
 
 
