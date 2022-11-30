@@ -14,7 +14,7 @@ public class Lift {
 
     public static Request[] getRequest() {
         int i = 0;
-        RequestQueue rq = new RequestQueue(5);
+        new RequestQueue(5);
         Scanner sc = new Scanner(System.in);
         Request[] requestList = new Request[5];
         while (i != 5) {
@@ -32,22 +32,19 @@ public class Lift {
     static <StopWatch> void moveTo(Request[] request)//receives the list of destinationLevel and assigns  them priorities based on the difference in sourceLevel and destination level
     {
 
-        Random rand = new Random();
-        int load = rand.nextInt(1000);
-        if (load < 700) {
-            PriorityQueue queuePriority = assignPriority(request);//creates  a priority queue
-            int i = 0;
-            while (!queuePriority.isEmpty()) {
-                Level p = queuePriority.remove();
-                System.out.println("Level : " + p.level + " Range : " + p.range);
-                long start = System.nanoTime();
-                sourceLevel = moveTo2(p);
-                long end = System.nanoTime();
-                System.out.println("Time taken :" + (end - start) / 1000);
-                System.out.println("People remaining : " + queuePriority.size());
-            }
+        PriorityQueue queuePriority = assignPriority(request);//creates  a priority queue
+        int i = 0;
+        while (!queuePriority.isEmpty()) {
+            Level p = queuePriority.remove();
+            System.out.println("Level : " + p.level + " Range : " + p.range);
+            long start = System.nanoTime();
+            sourceLevel = moveTo2(p);
+            long end = System.nanoTime();
+            System.out.println("Time taken :" + (end - start) / 1000);
+            System.out.println("People remaining : " + queuePriority.size());
         }
     }
+
 
     //externalRequests = [{direction, timeStamp, sourceLevel}]
     //internalRequests = [{timeStamp, destinationLevel , sourceLevel}]
