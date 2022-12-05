@@ -1,4 +1,3 @@
-import java.util.Random;
 import java.util.Scanner;
 
 
@@ -12,7 +11,7 @@ public class Lift {
 
     //New
 
-    public static Request[] getRequest() {
+    public Request[] getRequest() {
         int i = 0;
         new RequestQueue(5);
         Scanner sc = new Scanner(System.in);
@@ -29,7 +28,7 @@ public class Lift {
     }
 
     // 1.Priority 1.Requested time 2.Range 3.Current Load
-    static <StopWatch> void moveTo(Request[] request)//receives the list of destinationLevel and assigns  them priorities based on the difference in sourceLevel and destination level
+    void moveTo(Request[] request)//receives the list of destinationLevel and assigns  them priorities based on the difference in sourceLevel and destination level
     {
 
         PriorityQueue queuePriority = assignPriority(request);//creates  a priority queue
@@ -52,7 +51,7 @@ public class Lift {
 
     //linking externalRequest of one user to his internalRequest
 
-    static int moveTo2(Level p) {
+    int moveTo2(Level p) {
         if (sourceLevel < p.level) {
             while (sourceLevel != p.level) {
                 sourceLevel += 1;
@@ -67,7 +66,7 @@ public class Lift {
         return sourceLevel;
     }
 
-    static PriorityQueue assignPriority(Request[] r) {
+    PriorityQueue assignPriority(Request[] r) {
         PriorityQueue pq = new PriorityQueue(r.length);
         int[] rangeList = calcRange(r);
         pq.displayQueue();
@@ -77,7 +76,7 @@ public class Lift {
         return pq;
     }
 
-    static int[] calcRange(Request[] r) {
+    int[] calcRange(Request[] r) {
         int[] rangeList = new int[r.length];
         for (int i = 0; i < r.length; i++) {
             rangeList[i] = r[i].destinationLevel - r[i].sourceLevel;

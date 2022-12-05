@@ -25,14 +25,18 @@ public class RunLift {
         @Override
         public void run() {
             Lift lift = new Lift();
+            Request r = new Request(1, (int) System.nanoTime(), Lift.sourceLevel);
+            Request[] requestArray = {r};
+            System.out.println("External request recieved at " + r.destinationLevel);
+            lift.moveTo(requestArray);
             if (lift.checkload(Math.random() * (1050 + 1) + 0)) {
-                Request[] requests = Lift.getRequest();
-                Lift.moveTo(requests);
+                Request[] requests = lift.getRequest();
+                lift.moveTo(requests);
             } else {
                 System.out.println("Overweight!");
             }
-
         }
+
     }
 
 
